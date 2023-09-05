@@ -52,7 +52,7 @@ public class Game {
                 
                 battleLoc = new Forest(new Zombie());
                 battleLoc.onLocation(true);
-                monsterNumber = (int) Math.random() * 4;
+                monsterNumber = (int) Math.random() * 3;
                 battleLoc.cumbat(monsterNumber);
                 System.out.println("Odul kazandin! 'Food'");
                 inventory.setFood(true);
@@ -60,7 +60,7 @@ public class Game {
             }else if(yerSecimi == 3){
                 battleLoc = new Cave(new Vampire());
                 battleLoc.onLocation(true);
-                monsterNumber = (int) Math.random() * 4;
+                monsterNumber = (int) Math.random() * 3;
                 battleLoc.cumbat(monsterNumber);
                 System.out.println("Odul kazandin! 'Firewood'");
                 inventory.setFirewood(true);
@@ -68,7 +68,7 @@ public class Game {
             }else if(yerSecimi == 4){
                 battleLoc = new River(new Bear());
                 battleLoc.onLocation(true);
-                monsterNumber = (int) Math.random() * 4;
+                monsterNumber = (int) Math.random() * 3;
                 battleLoc.cumbat(monsterNumber);
                 System.out.println("Odul kazandin! 'Water'");
                 inventory.setWater(true);
