@@ -1,29 +1,35 @@
 package AboutGame.Location.NormalLoc;
 
-import AboutGame.Characters.Person;
+import AboutGame.Player;
+import AboutGame.Location.Location;
 
-public class SafeHouse extends NormalLoc {
-    Person person;
+public class SafeHouse extends Location {
+    Player player;
     boolean onLocation;
-    
+
+    public SafeHouse(Player player){
+        this.player = player;
+    }
+
     @Override
     public boolean onLocation(boolean onLocation) {
+        recover();
         return this.onLocation = onLocation;
     }
 
-    public void recover(){
-        if(onLocation == true){
-            person.setHealth(100);
+    public void recover() {
+        try {
+            if (this.player.getId() == 1) {
+                this.player.setHealth(21);
+            } else if (this.player.getId() == 2) {
+                this.player.setHealth(18);
+            } else if (this.player.getId() == 3) {
+                this.player.setHealth(24);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong.Invalid character");
         }
     }
-    public void place(){
-        if(onLocation == true){
-            System.out.println("Nereye gitmek istersin?");
-            System.out.println("1-) Mağaza\nBurada paranla silah ve zirh satin alabilirsin.Gücünü artirmak icin önemlidir.");
-            System.out.println("2-) Orman\nZombilere verdigin hasarla ganimet ve 'food' toplayacaksin. Baslangic icin uygundur.");
-            System.out.println("3-) Magara\n Vampirlere verdigin hasarla ganimet ve 'firewood' toplayacaksin. Orta seviyedir.");
-            System.out.println("4-) Nehir\nAyilara verdigin hasarla ganimet ve 'water' toplayacaksin. Digerlerine göre daha zordur.");
-        }
-    }
-    
+
 }

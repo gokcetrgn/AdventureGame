@@ -1,13 +1,30 @@
 package AboutGame;
 
-import java.util.Scanner;
-
 import AboutGame.Characters.Person;
 
 public class Player {
 
+ 
     private String name;
     Person person;
+    private int id;
+    private int damage = 0;
+    private int health = 0;
+    private int money = 0;
+    private Inventory inventory = new Inventory();
+    
+    
+
+    public Player(){
+        
+    }
+
+    public Player(int id,int damage,int health,int money) {
+		this.id = id;
+		this.damage = damage;
+		this.health = health;
+		this.money = money;		
+	}
 
     public String getName() {
         return name;
@@ -17,40 +34,42 @@ public class Player {
         this.name = name;
     }
 
-    public void selectChar(Person person){
-        try (Scanner scanner = new Scanner(System.in)) {
-            System.out.println("Girdiğiniz ID'ye göre\n" +
-            "1- Samuray\n" +
-            "2- Okçu\n" +
-            "3-Şovalye\n"
-            );
-            int karakterSecimi = scanner.nextInt();
-            if(karakterSecimi > 0 && karakterSecimi < 4){
-                switch (karakterSecimi){
-                    case 1:
-                    person.setId(1);
-                    person.setHealth(18);
-                    person.setDamage(5);
-                    person.setMoney(15);
-                    
-                    break;
-                    case 2:
-                    person.setId(2);
-                    person.setHealth(21);
-                    person.setDamage(7);
-                    person.setMoney(20);
-                    break;
-                    case 3:
-                    person.setId(3);
-                    person.setHealth(24);
-                    person.setDamage(8);
-                    person.setMoney(5);
-                    break;
-                }
-     }
-     else{
-            System.out.println("Verilenlere uygun bir islem seciniz.");
-     }
-        }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }

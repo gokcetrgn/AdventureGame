@@ -16,6 +16,6 @@ public class River extends BattleLoc{
         return this.location = location;
     }
     public void addItem(){
-        this.inventory.setWater(true);
+        this.player.getInventory().setWater(true);
     }
 }

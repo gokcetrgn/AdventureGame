@@ -1,9 +1,11 @@
 import java.util.Scanner;
 
-import AboutGame.Inventory;
 import AboutGame.Player;
+import AboutGame.Characters.Okcu;
 import AboutGame.Characters.Person;
-import AboutGame.Location.BattleLoc.BattleLoc;
+import AboutGame.Characters.Samuray;
+import AboutGame.Characters.Sovalye;
+import AboutGame.Location.Location;
 import AboutGame.Location.BattleLoc.Cave;
 import AboutGame.Location.BattleLoc.Forest;
 import AboutGame.Location.BattleLoc.River;
@@ -13,74 +15,147 @@ import AboutGame.Monsters.Bear;
 import AboutGame.Monsters.Vampire;
 import AboutGame.Monsters.Zombie;
 
+import static java.lang.System.*;
+
 public class Game {
-    Person person = new Person();
-    Scanner scanner = new Scanner(System.in);
-    SafeHouse safeHouse = new SafeHouse();
-    BattleLoc battleLoc;
-    int monsterNumber;
-    Inventory inventory;
 
+    Person person;
+    Location location;
+    Player player = new Player();
 
+    public void start() {
+        out.println("Adinizi giriniz: ");
+        Scanner scanner = new Scanner(in);
 
-    public void start(){
-        while(person.getHealth() == 0){
-            Player player = new Player();
-            System.out.println("Adinizi giriniz: ");
-            String name = scanner.nextLine();
+        String name = scanner.nextLine();
 
-            player.setName(name);
+        player.setName(name);
 
-            player.selectChar(person);
+        selectChar();
 
-            person.print();
+        person.print();
 
-            System.out.println("Safe Area'da doğdunuz. Unutmayin, burada caniniz her zaman yenilenir.");
+    }
 
-            safeHouse.place();
-
-            int yerSecimi = scanner.nextInt();
-
-            if(yerSecimi == 1){
-                ToolStore toolStore = new ToolStore();
-                toolStore.onLocation(true);
-
-                System.out.println("Menu aktariliyor... ");
-                toolStore.menu();
-
-            }else if(yerSecimi == 2){
-                
-                battleLoc = new Forest(new Zombie());
-                battleLoc.onLocation(true);
-                monsterNumber = (int) Math.random() * 3;
-                battleLoc.cumbat(monsterNumber);
-                System.out.println("Odul kazandin! 'Food'");
-                inventory.setFood(true);
-
-            }else if(yerSecimi == 3){
-                battleLoc = new Cave(new Vampire());
-                battleLoc.onLocation(true);
-                monsterNumber = (int) Math.random() * 3;
-                battleLoc.cumbat(monsterNumber);
-                System.out.println("Odul kazandin! 'Firewood'");
-                inventory.setFirewood(true);
-
-            }else if(yerSecimi == 4){
-                battleLoc = new River(new Bear());
-                battleLoc.onLocation(true);
-                monsterNumber = (int) Math.random() * 3;
-                battleLoc.cumbat(monsterNumber);
-                System.out.println("Odul kazandin! 'Water'");
-                inventory.setWater(true);
-
-            }
-            if(inventory.getFood() == true && inventory.getWater() == true && inventory.getFirewood() == true){
-                System.out.println("Bütün ödülleri kazandigin icin oyunu bitirdin! Tebrikler!!!!");
-                break;
+    public void selectChar() {
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.out.println("""
+                    Girdiğiniz ID'ye göre bir karakter seçilecek.
+                    1- Samuray
+                    2- Okçu
+                    3-Şovalye
+                    """);
+            int karakterSecimi = scanner.nextInt();
+            if (karakterSecimi > 0 && karakterSecimi < 4) {
+                switch (karakterSecimi) {
+                    case 1 -> {
+                        person = new Samuray();
+                        player.setId(karakterSecimi);
+                        player.setHealth(person.getHealth());
+                        player.setDamage(person.getDamage());
+                        player.setMoney(person.getMoney());
+                        out.println("Artik samuray karakterine sahipsin.");
+                    }
+                    case 2 -> {
+                        person = new Okcu();
+                        player.setId(karakterSecimi);
+                        player.setHealth(person.getHealth());
+                        player.setDamage(person.getDamage());
+                        player.setMoney(person.getMoney());
+                        out.println("Artik okcu karakterine sahipsin.");
+                    }
+                    case 3 -> {
+                        person = new Sovalye();
+                        player.setId(karakterSecimi);
+                        player.setHealth(person.getHealth());
+                        player.setDamage(person.getDamage());
+                        player.setMoney(person.getMoney());
+                        out.println("Artik sovalye karakterine sahipsin.");
+                    }
+                }
+            } else {
+                out.println("Verilenlere uygun bir islem seciniz.");
             }
         }
     }
+
+    public void printPlace() {
+
+        out.println("Nereye gitmek istersin?");
+        out
+                .println("1-) Mağaza\nBurada paranla silah ve zirh satin alabilirsin.Gücünü artirmak icin önemlidir.");
+        out.println(
+                "2-) Orman\nZombilere verdigin hasarla ganimet ve 'food' toplayacaksin. Baslangic icin uygundur.");
+        out.println(
+                "3-) Magara\n Vampirlere verdigin hasarla ganimet ve 'firewood' toplayacaksin. Orta seviyedir.");
+        out.println(
+                "4-) Nehir\nAyilara verdigin hasarla ganimet ve 'water' toplayacaksin. Digerlerine göre daha zordur.");
+        System.out.println("5-) Safe House\n Burası güvenli bölge! Can yenilenir.");
+        out.println("5-) EXIT");
+    }
+
+    public void selectPlace() {
+        try (Scanner scanner = new Scanner(System.in)) {
+
+            int yerSecimi;
+
+        while (true) {
+                printPlace();
+                yerSecimi = scanner.nextInt();
+
+                switch (yerSecimi) {
+                    case 1 -> {
+                        ToolStore toolStore = new ToolStore();
+                        toolStore.onLocation(true);
+                        out.println("Menu aktariliyor... ");
+                        toolStore.menu();
+                    }
+                    case 2 -> {
+                        if (!this.player.getInventory().getFood()) {
+                            location = new Forest(new Zombie());
+                            location.onLocation(true);
+                            out.println("Odul kazandin! 'Food'");
+                        } else {
+                            out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
+                        }
+                    }
+                    case 3 -> {
+                        if (!this.player.getInventory().getFirewood()) {
+                            location = new Cave(new Vampire());
+                            location.onLocation(true);
+                            out.println("Odul kazandin! 'Firewood'");
+                        } else {
+                            out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
+                        }
+                    }
+                    case 4 -> {
+                        if (!this.player.getInventory().getWater()) {
+                            location = new River(new Bear());
+                            location.onLocation(true);
+                            out.println("Odul kazandin! 'Water'");
+                        } else {
+                            out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
+                        }
+                    }
+                    case 5 -> {
+                        location = new SafeHouse(player);
+                        location.onLocation(true);
+                    }
+                    case 6 -> {
+                        out.println("Oyundan çikis yaptin.");
+                        exit(0);
+                    }
+                    default -> {
+                        out.println("Gecersiz! Otomatik olarak Safe House'a atandin.");
+                        location = new SafeHouse(player);
+                        location.onLocation(true);
+                    }
+                }
+           }
+        }
+    }
 }
+
 // EKSİKLER
 // CANAVARLARIN ÖZELLİKLERİ
 // BİR BÖLÜMÜ BİTİRDİKTEN SONRA SAFE HOUSE'A GEÇİŞ SAĞLANMASI

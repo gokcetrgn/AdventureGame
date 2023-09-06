@@ -6,6 +6,12 @@ public class Monster {
     private int health = 0;
     private int money = 0;
     
+    public Monster(int id, int damage, int health, int money) {
+        this.id = id;
+        this.damage = damage;
+        this.health = health;
+        this.money = money;
+    }
     public int getId() {
         return id;
     }

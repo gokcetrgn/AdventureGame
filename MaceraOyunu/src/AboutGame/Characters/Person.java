@@ -2,12 +2,22 @@ package AboutGame.Characters;
 
 import AboutGame.Inventory;
 
-public class Person {
-    Inventory inventory;
+public class Person extends Inventory{
     private int id;
     private int damage = 0;
     private int health = 0;
     private int money = 0;
+
+    public Person(){
+        
+    }
+
+    public Person(int id,int damage,int health,int money) {
+		this.id = id;
+		this.damage = damage;
+		this.health = health;
+		this.money = money;		
+	}
     
     public int getId() {
         return id;
@@ -43,7 +53,7 @@ public class Person {
         System.out.println("Damage: " + this.damage);
         System.out.println("Health: " + this.health);
         System.out.println("Money: " + this.money);
-        inventory.print();
+        super.print();
     }
 
 }

@@ -15,7 +15,8 @@ public class Forest extends BattleLoc{
         
     }
     public void addItem(){
-        this.inventory.setFood(true);
+        this.player.getInventory().setFood(true);
+
     }
     
     

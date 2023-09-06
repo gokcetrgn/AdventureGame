@@ -1,19 +1,18 @@
 package AboutGame;
 
-import AboutGame.Characters.Person;
 import AboutGame.Envanter.Silahlar.Silah;
 import AboutGame.Envanter.Zırhlar.Zirh;
 
 public class Inventory {
-    Person person;
     Zirh zirh = new Zirh();
     Silah silah = new Silah();
+
 
     private boolean water = false;
     private boolean food = false;
     private boolean firewood = false;
-    private String weaponName = null;
-    private String armorName = null;
+    private String weaponName = "";
+    private String armorName = "";
     private int weaponDamage = 0;
     private int armorDefence = 0;
     
@@ -52,14 +51,13 @@ public class Inventory {
     }
     public void setWeaponDamage() {
         this.weaponDamage = silah.getDamage();
-        person.setDamage( person.getDamage() + this.weaponDamage);
     }
     public int getArmorDefence() {
         return armorDefence;
     }
     public void setArmorDefence() {
         this.armorDefence = zirh.getDefence();
-        person.setDamage( person.getDamage() + this.armorDefence);
+        
     }
     public void print(){
         System.out.println("Water: " + this.water);

@@ -15,6 +15,6 @@ public class Cave extends BattleLoc{
     }
     @Override
     public void addItem(){
-        this.inventory.setFirewood(true);
+        this.player.getInventory().setFirewood(true);
     }
 }
