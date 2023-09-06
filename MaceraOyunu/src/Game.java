@@ -91,7 +91,7 @@ public class Game {
         out.println(
                 "4-) Nehir\nAyilara verdigin hasarla ganimet ve 'water' toplayacaksin. Digerlerine göre daha zordur.");
         System.out.println("5-) Safe House\n Burası güvenli bölge! Can yenilenir.");
-        out.println("5-) EXIT");
+        out.println("6-) EXIT");
     }
 
     public void selectPlace() {
