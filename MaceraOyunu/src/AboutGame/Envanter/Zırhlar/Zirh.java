@@ -5,47 +5,34 @@ public class Zirh {
     private String name;
     private int defence;
     private int money;
+    public Zirh(int id,String name, int defence, int money) {
+        this.id = id;
+        this.name = name;
+        this.defence = defence;
+        this.money = money;
+    }public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
-    }
-    public void setName() {
-        if(id == 1){
-            this.name = "Hafif";
-        }else if(id == 2){
-            this.name = "Orta";
-        }else if(id == 3){
-            this.name = "Ağir";
-        }
-    }
     public int getDefence() {
         return defence;
     }
-    public void setDefence() {
-        if(id == 1){
-            this.defence = 1;
-        }else if(id == 2){
-            this.defence = 3;
-        }else if(id == 3){
-            this.defence = 5;
-        }
+    public void setDefence(int defence)
+    { this.defence = defence;
     }
     public int getMoney() {
         return money;
     }
-    public void setMoney() {
-        if(id == 1){
-            this.money = 15;
-        }else if(id == 2){
-            this.money = 25;
-        }else if(id == 3){
-            this.money = 40;
-        }
+    public void setMoney(int money) {
+        this.money = money;
     }
 
     

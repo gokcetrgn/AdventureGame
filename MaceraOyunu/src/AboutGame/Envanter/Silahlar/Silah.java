@@ -6,46 +6,32 @@ public class Silah {
     private int damage;
     private int money;
 
+    public Silah(int id, String name, int damage, int money) {
+        this.id = id;
+        this.damage = damage;
+        this.money = money;
+    }
+    public String getName(){
+        return name;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
     public int getId() {
         return id;
     }
     public void setId(int id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
-    }
-    public void setName() {
-        if(id == 1){
-            this.name = "Tabanca";
-        }else if(id == 2){
-            this.name = "Kiliç";
-        }else if(id == 3){
-            this.name = "Tüfek";
-        }
-    }
     public int getDamage() {
         return damage;
     }
-    public void setDamage() {
-        if(id == 1){
-            this.damage = 2;
-        }else if(id == 2){
-            this.damage = 3;
-        }else if(id == 3){
-            this.damage = 7;
-        }
+    public void setDamage(int damage) {this.damage = damage;
     }
     public int getMoney() {
         return money;
     }
-    public void setMoney() {
-        if(id == 1){
-            this.money = 25;
-        }else if(id == 2){
-            this.money = 35;
-        }else if(id == 3){
-            this.money = 45;
-        }
+    public void setMoney(int money) {
+        this.money = money;
     }
 }

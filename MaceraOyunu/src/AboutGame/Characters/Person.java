@@ -41,13 +41,7 @@ public class Person extends Inventory{
         return money;
     }
     public void setMoney(int money) {
-        if(money >= 0){
         this.money = money;
-        System.out.println("Paraniz: "+ this.money);
-        }else{
-            System.out.println("Bu envanteri satin alamazsiniz!!");
-            System.out.println("Paraniz: " + this.money);
-        }
     }
     public void print(){
         System.out.println("Damage: " + this.damage);

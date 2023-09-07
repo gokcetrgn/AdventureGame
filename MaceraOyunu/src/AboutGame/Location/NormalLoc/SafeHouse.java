@@ -4,17 +4,16 @@ import AboutGame.Player;
 import AboutGame.Location.Location;
 
 public class SafeHouse extends Location {
-    Player player;
-    boolean onLocation;
 
-    public SafeHouse(Player player){
-        this.player = player;
+    public SafeHouse(Player player, String name){
+        super(player,name);
     }
 
     @Override
-    public boolean onLocation(boolean onLocation) {
+    public boolean onLocation() {
+        System.out.println("Safe House! Canın yenileniyor..");
         recover();
-        return this.onLocation = onLocation;
+        return true;
     }
 
     public void recover() {
@@ -31,5 +30,4 @@ public class SafeHouse extends Location {
             System.out.println("Something went wrong.Invalid character");
         }
     }
-
 }

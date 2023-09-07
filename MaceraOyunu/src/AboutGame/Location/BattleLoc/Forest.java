@@ -1,17 +1,13 @@
 package AboutGame.Location.BattleLoc;
 
-import AboutGame.Monsters.Monster;
+
+import AboutGame.Monsters.Vampire;
+import AboutGame.Player;
+
 public class Forest extends BattleLoc{
-    boolean location;
-    Monster monster;
 
-    @Override
-    public boolean onLocation(boolean location) {
-        return this.location = location;
-    }
-
-    public Forest(Monster monster) {
-        super(monster);
+    public Forest(Player player) {
+        super(player, "Forest",new Vampire());
         
     }
     public void addItem(){

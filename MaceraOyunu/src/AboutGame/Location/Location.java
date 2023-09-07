@@ -3,12 +3,14 @@ package AboutGame.Location;
 import AboutGame.Player;
 
 public abstract class Location {
-    Player player;
+    public Player player;
     String name;
-    boolean location;
 
-    public Location(){
+    public Location(){}
 
+    public Location(Player player, String name) {
+        this.player = player;
+        this.name = name;
     }
-    public abstract boolean onLocation(boolean location);
+    public abstract boolean onLocation();
 }

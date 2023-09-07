@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 import AboutGame.Player;
 import AboutGame.Characters.Okcu;
 import AboutGame.Characters.Person;
@@ -11,34 +10,30 @@ import AboutGame.Location.BattleLoc.Forest;
 import AboutGame.Location.BattleLoc.River;
 import AboutGame.Location.NormalLoc.SafeHouse;
 import AboutGame.Location.NormalLoc.ToolStore;
-import AboutGame.Monsters.Bear;
-import AboutGame.Monsters.Vampire;
-import AboutGame.Monsters.Zombie;
+
 
 import static java.lang.System.*;
 
 public class Game {
 
     Person person;
+    public String name;
     Location location;
     Player player = new Player();
 
-    public void start() {
+    public void start(Scanner scanner) {
         out.println("Adinizi giriniz: ");
-        Scanner scanner = new Scanner(in);
-
         String name = scanner.nextLine();
 
         player.setName(name);
 
-        selectChar();
+        selectChar(scanner);
 
         person.print();
 
     }
 
-    public void selectChar() {
-        try (Scanner scanner = new Scanner(System.in)) {
+    public void selectChar(Scanner scanner) {
             System.out.println("""
                     Girdiğiniz ID'ye göre bir karakter seçilecek.
                     1- Samuray
@@ -77,7 +72,7 @@ public class Game {
                 out.println("Verilenlere uygun bir islem seciniz.");
             }
         }
-    }
+
 
     public void printPlace() {
 
@@ -90,76 +85,73 @@ public class Game {
                 "3-) Magara\n Vampirlere verdigin hasarla ganimet ve 'firewood' toplayacaksin. Orta seviyedir.");
         out.println(
                 "4-) Nehir\nAyilara verdigin hasarla ganimet ve 'water' toplayacaksin. Digerlerine göre daha zordur.");
-        System.out.println("5-) Safe House\n Burası güvenli bölge! Can yenilenir.");
+        out.println("5-) Safe House\n Burası güvenli bölge! Can yenilenir.");
         out.println("6-) EXIT");
     }
 
-    public void selectPlace() {
-        try (Scanner scanner = new Scanner(System.in)) {
+    public void selectPlace(Scanner scanner) {
+        printPlace();
+        out.print("Yer seçimin: " );
+        int yerSecimi = scanner.nextInt();
+        while(true) {
+            switch (yerSecimi) {
+                case 1 -> {
+                    location = new ToolStore(player, name);
+                    location.onLocation();
+                    out.println("Menu aktariliyor... ");
+                    selectPlace(scanner);
+                }
+                case 2 -> {
+                    if (!this.player.getInventory().getFood()) {
+                        location = new Forest(player);
+                        location.onLocation();
+                        out.println("Odul kazandin! 'Food'");
+                        selectPlace(scanner);
 
-            int yerSecimi;
-
-        while (true) {
-                printPlace();
-                yerSecimi = scanner.nextInt();
-
-                switch (yerSecimi) {
-                    case 1 -> {
-                        ToolStore toolStore = new ToolStore();
-                        toolStore.onLocation(true);
-                        out.println("Menu aktariliyor... ");
-                        toolStore.menu();
-                    }
-                    case 2 -> {
-                        if (!this.player.getInventory().getFood()) {
-                            location = new Forest(new Zombie());
-                            location.onLocation(true);
-                            out.println("Odul kazandin! 'Food'");
-                        } else {
-                            out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
-                        }
-                    }
-                    case 3 -> {
-                        if (!this.player.getInventory().getFirewood()) {
-                            location = new Cave(new Vampire());
-                            location.onLocation(true);
-                            out.println("Odul kazandin! 'Firewood'");
-                        } else {
-                            out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
-                        }
-                    }
-                    case 4 -> {
-                        if (!this.player.getInventory().getWater()) {
-                            location = new River(new Bear());
-                            location.onLocation(true);
-                            out.println("Odul kazandin! 'Water'");
-                        } else {
-                            out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
-                        }
-                    }
-                    case 5 -> {
-                        location = new SafeHouse(player);
-                        location.onLocation(true);
-                    }
-                    case 6 -> {
-                        out.println("Oyundan çikis yaptin.");
-                        exit(0);
-                    }
-                    default -> {
-                        out.println("Gecersiz! Otomatik olarak Safe House'a atandin.");
-                        location = new SafeHouse(player);
-                        location.onLocation(true);
+                    } else {
+                        out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
+                        selectPlace(scanner);
                     }
                 }
-           }
+                case 3 -> {
+                    if (!this.player.getInventory().getFirewood()) {
+                        location = new Cave(player);
+                        location.onLocation();
+                        out.println("Odul kazandin! 'Firewood'");
+                        selectPlace(scanner);
+                    } else {
+                        out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
+                        selectPlace(scanner);
+                    }
+                }
+                case 4 -> {
+                    if (!this.player.getInventory().getWater()) {
+                        location = new River(player);
+                        location.onLocation();
+                        out.println("Odul kazandin! 'Water'");
+                        selectPlace(scanner);
+                    } else {
+                        out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
+                        selectPlace(scanner);
+                    }
+                }
+                case 5 -> {
+                    location = new SafeHouse(player,name);
+                    location.onLocation();
+                    selectPlace(scanner);
+                }
+                case 6 -> {
+                    out.println("Oyundan çikis yaptin.");
+                    exit(0);
+                }
+                default -> {
+                    out.println("Gecersiz! Otomatik olarak Safe House'a atandin.");
+                    location = new SafeHouse(player,name);
+                    location.onLocation();
+                    selectPlace(scanner);
+                }
+            }
         }
     }
 }
 
-// EKSİKLER
-// CANAVARLARIN ÖZELLİKLERİ
-// BİR BÖLÜMÜ BİTİRDİKTEN SONRA SAFE HOUSE'A GEÇİŞ SAĞLANMASI
-// PARA EKLENMESİ (CANAVARLAR ÖLDÜKTEN SONRA)
-// MAĞAZAYA GECİSİN SAĞLANMASİ
-// BUNLAR YAPILIRSA TEST KISMI
-// HATALARIN GİDERİLMESİ

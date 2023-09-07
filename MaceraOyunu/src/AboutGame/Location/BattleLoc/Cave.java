@@ -1,18 +1,13 @@
 package AboutGame.Location.BattleLoc;
 
-import AboutGame.Monsters.Monster;
+import AboutGame.Monsters.Zombie;
+import AboutGame.Player;
 
 public class Cave extends BattleLoc{
-    public Cave(Monster monster) {
-        super(monster);
+    public Cave(Player player) {
+        super(player,"Cave",new Zombie());
     }
 
-    boolean location;
-
-    @Override
-    public boolean onLocation(boolean location) {
-        return this.location = location;
-    }
     @Override
     public void addItem(){
         this.player.getInventory().setFirewood(true);

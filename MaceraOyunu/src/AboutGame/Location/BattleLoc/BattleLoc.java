@@ -1,5 +1,6 @@
 package AboutGame.Location.BattleLoc;
 
+import java.util.Random;
 import java.util.Scanner;
 import AboutGame.Player;
 import AboutGame.Location.Location;
@@ -9,71 +10,52 @@ import AboutGame.Monsters.Monster;
 public abstract class BattleLoc extends Location {
     Player player;
     Monster monster;
-    int monsterNumber;
+    Random random;
+    String name;
     Location location;
+    int randomObstacle = randomObstacle();
 
-    public BattleLoc(Monster monster) {
+    public BattleLoc(Player player, String name, Monster monster){
+        this.player = player;
+        this.name = name;
         this.monster = monster;
+        this.randomObstacle = randomObstacle();
+
     }
 
-    public abstract boolean onLocation(boolean location);
 
-    public abstract void addItem();
-
-    public void cumbat(int monsterNumber) {
-
-        this.monsterNumber = randomObstacle();
+    public  boolean onLocation(){
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Tehlikeli bolgedesin! Kacmak icin 1 Savasmak icin 2");
+        System.out.println("Tehlikeli bolgedesin! Canavar sayisi: " + this.randomObstacle + "\nKacmak icin 1 Savasmak icin 2");
 
         int secim = scanner.nextInt();
 
         if (secim == 1) {
             System.out.println("Safe House'a yönlendiriliyorsun.");
-            location = new SafeHouse(player);
-            location.onLocation(true);
+            location = new SafeHouse(player, player.getName());
+            location.onLocation();
 
         } else if (secim == 2) {
-            while (this.monsterNumber == 0) {
-                this.monster.setHealth(this.monster.getHealth() - this.player.getDamage());
-
-                if (winner()) {
-                    System.out.println("Bir canavari alt ettin!!!");
-                    
-                    player.setMoney(player.getMoney() + monster.getMoney());
-                    monsterNumber--;
-                }
-                int monsterDamage = this.player.getInventory().getArmorDefence() - this.monster.getDamage();
-                this.player.setHealth(this.player.getHealth() - monsterDamage);
-
-                if (winner() == false) {
-                    System.out.println("Kaybettin!!! ");
-                    System.exit(0);
-                }
-            }
-            
-        }
-        if(this.monsterNumber == 0){
-            getInventoryPrize();
+            fight(randomObstacle);
         }
         if(this.player.getInventory().getWater() && this.player.getInventory().getFood() && this.player.getInventory().getFirewood()){
-                System.out.println("KAZANDIN!!!");
-                System.exit(0);
-            }
-        scanner.close();
+            System.out.println("KAZANDIN!!!");
+            System.exit(0);
+        }
+        return true;
     }
 
+    public abstract void addItem();
+
+
     public boolean winner() {
-        if (this.player.getHealth() == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return this.player.getHealth() != 0;
     }
 
     public int randomObstacle() {
-        return monsterNumber = (int) Math.random() * 3;
+        random = new Random();
+        return random.nextInt(3) + 1;
     }
 
    
@@ -96,8 +78,36 @@ public abstract class BattleLoc extends Location {
 			
 		}
 	}
+    public void fight(int initialRandomObstacle){
+        int originalHealth = this.monster.getHealth();
+        int remainingRandomObstacles = initialRandomObstacle;
 
+        while (remainingRandomObstacles != 0) {
+
+            this.monster.setHealth(this.monster.getHealth() - this.player.getDamage());
+
+            if (this.monster.getHealth() == 0) {
+                System.out.println("Bir canavari alt ettin!!!");
+                System.out.println("Kalan canavar sayisi: " + remainingRandomObstacles);
+
+                this.player.setMoney(this.player.getMoney() + this.monster.getMoney());
+                remainingRandomObstacles--;
+
+                if(remainingRandomObstacles == 0){
+                    getInventoryPrize();
+                    addItem();
+                    break;
+                }
+            }
+            this.monster.setHealth(originalHealth);
+
+            int monsterDamage = this.monster.getDamage() - this.player.getInventory().getArmorDefence();
+            this.player.setHealth(this.player.getHealth() - monsterDamage);
+
+            if (!winner()) {
+                System.out.println("Kaybettin!!! ");
+                System.exit(0);
+            }
+        }
+    }
 }
-// if (inventory.getFood() == true && inventory.getWater() == true && inventory.getFirewood() == true) {
-  //          System.out.println("Bütün ödülleri kazandigin icin oyunu bitirdin! Tebrikler!!!!");
-     //   }

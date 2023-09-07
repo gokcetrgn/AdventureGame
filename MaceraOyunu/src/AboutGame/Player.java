@@ -6,17 +6,16 @@ public class Player {
 
  
     private String name;
-    Person person;
     private int id;
     private int damage = 0;
     private int health = 0;
     private int money = 0;
     private Inventory inventory = new Inventory();
     
-    
+
 
     public Player(){
-        
+
     }
 
     public Player(int id,int damage,int health,int money) {
@@ -63,6 +62,7 @@ public class Player {
     }
 
     public void setMoney(int money) {
+
         this.money = money;
     }
     public Inventory getInventory() {

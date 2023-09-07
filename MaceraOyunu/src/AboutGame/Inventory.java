@@ -4,8 +4,8 @@ import AboutGame.Envanter.Silahlar.Silah;
 import AboutGame.Envanter.Zırhlar.Zirh;
 
 public class Inventory {
-    Zirh zirh = new Zirh();
-    Silah silah = new Silah();
+    Zirh zirh;
+    Silah silah;
 
 
     private boolean water = false;
@@ -37,26 +37,26 @@ public class Inventory {
     public String getWeaponName() {
         return weaponName;
     }
-    public void setWeaponName() {
-        this.weaponName = silah.getName();
+    public void setWeaponName(String name) {
+        this.weaponName = name;
     }
     public String getArmorName() {
         return armorName;
     }
-    public void setArmorName() {
-        this.armorName = zirh.getName();
+    public void setArmorName(String name) {
+        this.armorName = name;
     }
     public int getWeaponDamage() {
         return weaponDamage;
     }
-    public void setWeaponDamage() {
-        this.weaponDamage = silah.getDamage();
+    public void setWeaponDamage(int damage) {
+        this.weaponDamage = damage;
     }
     public int getArmorDefence() {
         return armorDefence;
     }
-    public void setArmorDefence() {
-        this.armorDefence = zirh.getDefence();
+    public void setArmorDefence(int defence) {
+        this.armorDefence = defence;
         
     }
     public void print(){
