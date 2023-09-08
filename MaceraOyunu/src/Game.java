@@ -38,7 +38,7 @@ public class Game {
                     Girdiğiniz ID'ye göre bir karakter seçilecek.
                     1- Samuray
                     2- Okçu
-                    3-Şovalye
+                    3- Şovalye
                     """);
             int karakterSecimi = scanner.nextInt();
             if (karakterSecimi > 0 && karakterSecimi < 4) {
@@ -105,7 +105,7 @@ public class Game {
                     if (!this.player.getInventory().getFood()) {
                         location = new Forest(player);
                         location.onLocation();
-                        out.println("Odul kazandin! 'Food'");
+                        out.println("Tebrikler, zoru başararak ödülü kazandin! -> 'Food'");
                         selectPlace(scanner);
 
                     } else {
@@ -117,7 +117,7 @@ public class Game {
                     if (!this.player.getInventory().getFirewood()) {
                         location = new Cave(player);
                         location.onLocation();
-                        out.println("Odul kazandin! 'Firewood'");
+                        out.println("Tebrikler, zoru başararak ödülü kazandin! -> 'Firewood'");
                         selectPlace(scanner);
                     } else {
                         out.println("Envantere sahip oldugun icin bu odaya giremezsin.");
@@ -128,7 +128,7 @@ public class Game {
                     if (!this.player.getInventory().getWater()) {
                         location = new River(player);
                         location.onLocation();
-                        out.println("Odul kazandin! 'Water'");
+                        out.println("Tebrikler, zoru başararak ödülü kazandin! -> 'Water'");
                         selectPlace(scanner);
                     } else {
                         out.println("Envantere sahip oldugun icin bu odaya giremezsin.");

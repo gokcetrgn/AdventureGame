@@ -1,11 +1,11 @@
 package AboutGame.Location.BattleLoc;
 
-import AboutGame.Monsters.Zombie;
+import AboutGame.Monsters.Vampire;
 import AboutGame.Player;
 
 public class Cave extends BattleLoc{
     public Cave(Player player) {
-        super(player,"Cave",new Zombie());
+        super(player,"Cave",new Vampire());
     }
 
     @Override

@@ -1,13 +1,6 @@
 package AboutGame;
 
-import AboutGame.Envanter.Silahlar.Silah;
-import AboutGame.Envanter.Zırhlar.Zirh;
-
 public class Inventory {
-    Zirh zirh;
-    Silah silah;
-
-
     private boolean water = false;
     private boolean food = false;
     private boolean firewood = false;

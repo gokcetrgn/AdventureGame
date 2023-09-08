@@ -32,11 +32,13 @@ public class ToolStore extends Location {
     }
 
     public void menu(Scanner scanner) {
-        System.out.print("Hos geldin!\nSilah icin 1\nZirh icin 2\n");
+        System.out.print("Hos geldin!\n"
+                + "Su anki paran: " + this.player.getMoney()
+                + "\nSilah icin 1\nZirh icin 2\n");
 
             envanterSecimi = scanner.nextInt();
             if (envanterSecimi == 1) {
-                System.out.printf("Silah ID giriniz:\n 1- Tabanca (25)\n2-Kiliç (35)\n3-Tüfek (45)\n%n");
+                System.out.printf("Silah ID giriniz:\n 1-Tabanca (25)\n2-Kiliç (35)\n3-Tüfek (45)\n%n");
                 silahSecimi = scanner.nextInt();
                 if(silahSecimi == 1){
                     buyGun(new Tabanca());
@@ -47,7 +49,7 @@ public class ToolStore extends Location {
                 }
 
             } else if (envanterSecimi == 2) {
-                System.out.printf("Zirh ID giriniz:\n1- Hafif (15)\n2-Orta (25)\n3-Agir (40)\n%n");
+                System.out.printf("Zirh ID giriniz:\n1-Hafif (15)\n2-Orta (25)\n3-Agir (40)\n%n");
                 zirhSecimi = scanner.nextInt();
                 if(zirhSecimi == 1){
                     buyArmor(new Hafif());
