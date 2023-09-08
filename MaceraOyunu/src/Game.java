@@ -1,4 +1,7 @@
 import java.util.Scanner;
+
+import AboutGame.Location.BattleLoc.Mine;
+import AboutGame.Monsters.Snake;
 import AboutGame.Player;
 import AboutGame.Characters.Okcu;
 import AboutGame.Characters.Person;
@@ -85,8 +88,9 @@ public class Game {
                 "3-) Magara\n Vampirlere verdigin hasarla ganimet ve 'firewood' toplayacaksin. Orta seviyedir.");
         out.println(
                 "4-) Nehir\nAyilara verdigin hasarla ganimet ve 'water' toplayacaksin. Digerlerine göre daha zordur.");
-        out.println("5-) Safe House\n Burası güvenli bölge! Can yenilenir.");
-        out.println("6-) EXIT");
+        out.println("5-) Maden\nYılanlara karşı verdiğin hasarla ganimet kazanabileceksin. Eşya toplamak için en ideal yerdir.");
+        out.println("6-) Safe House\n Burası güvenli bölge! Can yenilenir.");
+        out.println("7-) EXIT");
     }
 
     public void selectPlace(Scanner scanner) {
@@ -135,12 +139,18 @@ public class Game {
                         selectPlace(scanner);
                     }
                 }
-                case 5 -> {
+                case 5 ->{
+                    location = new Mine(player);
+                    location.onLocation();
+                    out.println("Tebrikler, tüm yılanları yendin!!");
+                    selectPlace(scanner);
+                }
+                case 6 -> {
                     location = new SafeHouse(player,name);
                     location.onLocation();
                     selectPlace(scanner);
                 }
-                case 6 -> {
+                case 7 -> {
                     out.println("Oyundan çikis yaptin.");
                     exit(0);
                 }

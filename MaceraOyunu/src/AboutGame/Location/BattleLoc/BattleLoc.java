@@ -45,6 +45,10 @@ public abstract class BattleLoc extends Location {
         }
         return true;
     }
+    public int chanceNumber(){
+        random = new Random();
+        return random.nextInt(100);
+    }
 
     public abstract void addItem();
 
@@ -78,6 +82,10 @@ public abstract class BattleLoc extends Location {
 				System.out.println("Water kazandin! ");
                 System.out.println(">>>>>>>>>>>>>>>>>>>>>");
 			}
+            case 4 -> {
+                addItem();
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>");
+            }
 			
 		}
 	}
@@ -88,34 +96,38 @@ public abstract class BattleLoc extends Location {
         System.out.println("Senin sağlığın: " + this.player.getHealth() + "\nCanavarın sağlığı: "+ this.monster.getHealth());
         System.out.println("----------------------------------------------");
         while (remainingRandomObstacles != 0) {
+            int chance = chanceNumber();
+            System.out.println(chance);
+            if(chance < 50){
+                this.monster.setHealth(this.monster.getHealth() - (this.player.getDamage()+ this.player.getInventory().getWeaponDamage()));
+                System.out.println(this.player.getName() + " vurdu: " + this.player.getDamage());
+                System.out.println("Canavarın kalan sağlığı: " + this.monster.getHealth());
 
-            this.monster.setHealth(this.monster.getHealth() - (this.player.getDamage()+ this.player.getInventory().getWeaponDamage()));
-            System.out.println(this.player.getName() + " vurdu: " + this.player.getDamage());
-            System.out.println("Canavarın kalan sağlığı: " + this.monster.getHealth());
+                if (this.monster.getHealth() == 0) {
+                    System.out.println("--------------------------------------------------");
+                    System.out.println("Bir canavari alt ettin!!!");
+                    this.monster.setHealth(originalHealth);
+                    this.player.setMoney(this.player.getMoney() + this.monster.getMoney());
+                    System.out.println("--------------------------------------------------");
+                    remainingRandomObstacles--;
+                    System.out.println("Kalan canavar sayisi: " + remainingRandomObstacles);
 
-            if (this.monster.getHealth() == 0) {
-                System.out.println("--------------------------------------------------");
-                System.out.println("Bir canavari alt ettin!!!");
-                this.monster.setHealth(originalHealth);
-                this.player.setMoney(this.player.getMoney() + this.monster.getMoney());
-                System.out.println("--------------------------------------------------");
-                remainingRandomObstacles--;
-                System.out.println("Kalan canavar sayisi: " + remainingRandomObstacles);
-
-                if(remainingRandomObstacles == 0){
-                    getInventoryPrize();
-                    break;
+                    if(remainingRandomObstacles == 0){
+                        getInventoryPrize();
+                        break;
+                    }
                 }
-            }
-            System.out.println(this.monster.getId() + " .Canavar vurdu: " + this.monster.getDamage());
+            } else {
+                System.out.println(this.monster.getId() + " .Canavar vurdu: " + this.monster.getDamage());
 
-            this.player.setHealth(this.player.getHealth() - this.monster.getDamage());
-            System.out.println("Kalan sağlığın: " + this.player.getHealth());
+                this.player.setHealth(this.player.getHealth() - this.monster.getDamage());
+                System.out.println("Kalan sağlığın: " + this.player.getHealth());
 
-            if (!winner()) {
-                System.out.println("^^^^^^^^^^^^----^^^^^^^^^^^^^");
-                System.out.println("Kaybettin!!! ");
-                System.exit(0);
+                if (!winner()) {
+                    System.out.println("^^^^^^^^^^^^----^^^^^^^^^^^^^");
+                    System.out.println("Kaybettin!!! ");
+                    System.exit(0);
+                }
             }
         }
     }
